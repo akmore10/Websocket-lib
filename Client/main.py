@@ -4,10 +4,15 @@ import socket
 clientObj = Client(socket.AF_INET, socket.SOCK_STREAM,"localhost",9091)
 print("Hello to the chat application")
 print("Enter your Message !!")
+message = input(" >>> ")
+clientObj.sendall(message.encode())
 while True:
     message = input(" >>> ")
     try:
         clientObj.sendall(message.encode())
-        print(clientObj.recv(1024).decode())
+        data = clientObj.recv(1024).decode() 
+        while clientObj.recv(1024).decode() != "\0":
+            data += clientObj.recv(1024).decode()
     except Exception as e:
-        print(e)
+        clientObj.close()
+        break

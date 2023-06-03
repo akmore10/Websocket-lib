@@ -7,4 +7,7 @@ class Client(socket.socket):
         self.server_address = server_address
         self.server_port = server_port
         self.connect((self.server_address,self.server_port))
+    
+    def close(self):
+        self.close()
 
